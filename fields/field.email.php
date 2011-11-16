@@ -1,70 +1,15 @@
 <?php
 	
-	Class fieldEmail extends Field {
+	require_once(TOOLKIT . '/fields/field.input.php');
+	
+	Class fieldEmail extends fieldInput {
+		
 		public function __construct(&$parent){
 			parent::__construct($parent);
 			$this->_name = __('Email');
 			$this->_required = true;
 			
 			$this->set('required', 'no');
-		}
-
-		public function allowDatasourceOutputGrouping(){
-			return true;
-		}
-		
-		public function allowDatasourceParamOutput(){
-			return true;
-		}
-
-		public function groupRecords($records){
-			
-			if(!is_array($records) || empty($records)) return;
-			
-			$groups = array($this->get('element_name') => array());
-			
-			foreach($records as $r){
-				$data = $r->getData($this->get('id'));
-				
-				$value = $data['value'];
-				
-				if(!isset($groups[$this->get('element_name')][$value])){
-					$groups[$this->get('element_name')][$value] = array('attr' => array('value' => $value),
-																		 'records' => array(), 'groups' => array());
-				}	
-																					
-				$groups[$this->get('element_name')][$value]['records'][] = $r;
-								
-			}
-
-			return $groups;
-		}
-
-		public function displayPublishPanel(&$wrapper, $data=NULL, $flagWithError=NULL, $fieldnamePrefix=NULL, $fieldnamePostfix=NULL){
-			$value = General::sanitize($data['value']);
-			$label = Widget::Label($this->get('label'));
-			if($this->get('required') != 'yes') $label->appendChild(new XMLElement('i', __('Optional')));
-			$label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, (strlen($value) != 0 ? $value : NULL)));
-
-			if($flagWithError != NULL) $wrapper->appendChild(Widget::wrapFormElementWithError($label, $flagWithError));
-			else $wrapper->appendChild($label);
-		}
-		
-		public function isSortable(){
-			return true;
-		}
-		
-		public function canFilter(){
-			return true;
-		}
-		
-		public function canImport(){
-			return true;
-		}
-
-		public function buildSortingSQL(&$joins, &$where, &$sort, $order='ASC'){
-			$joins .= "LEFT OUTER JOIN `tbl_entries_data_".$this->get('id')."` AS `ed` ON (`e`.`id` = `ed`.`entry_id`) ";
-			$sort = 'ORDER BY ' . (in_array(strtolower($order), array('random', 'rand')) ? 'RAND()' : "`ed`.`value` $order");
 		}
 		
 		public function buildDSRetrivalSQL($data, &$joins, &$where, $andOperation = false) {
@@ -124,6 +69,10 @@
 			return General::validateString($data, $rule);
 		}
 		
+		public function setFromPOST($postdata){
+			parent::setFromPOST($postdata);
+		}
+		
 		public function checkPostFieldData($data, &$message, $entry_id=NULL){
 
 			$message = NULL;
@@ -143,7 +92,6 @@
 		}
 		
 		public function processRawFieldData($data, &$status, $simulate = false, $entry_id = null) {
-
 			$status = self::__OK__;
 			
 			if (strlen(trim($data)) == 0) return array();
@@ -155,17 +103,10 @@
 			return $result;
 		}
 
-		public function canPrePopulate(){
-			return true;
-		}
-
 		public function appendFormattedElement(&$wrapper, $data, $encode=false){
-
 			$value = $data['value'];
 
-			if($encode === true){
-				$value = General::sanitize($value);
-			}
+			if($encode === true) $value = General::sanitize($value);
 			
 			$wrapper->appendChild(
 				new XMLElement(
@@ -175,29 +116,25 @@
 		}
 		
 		public function commit(){
-
 			if(!parent::commit()) return false;
 			
 			$id = $this->get('id');
-
 			if($id === false) return false;
 			
 			$fields = array();
-			
 			$fields['field_id'] = $id;
 			
 			Symphony::Database()->query("DELETE FROM `tbl_fields_".$this->handle()."` WHERE `field_id` = '$id' LIMIT 1");
-				
 			return Symphony::Database()->insert($fields, 'tbl_fields_' . $this->handle());
-					
 		}
-
 		
 		public function displaySettingsPanel(&$wrapper, $errors = null) {
 			parent::displaySettingsPanel($wrapper, $errors);	
 			
-			$this->appendRequiredCheckbox($wrapper);
-			$this->appendShowColumnCheckbox($wrapper);	
+			$div = new XMLElement('div', NULL, array('class' => 'compact'));
+			$this->appendRequiredCheckbox($div);
+			$this->appendShowColumnCheckbox($div);
+			$wrapper->appendChild($div);
 		}
 		
 		public function createTable(){
@@ -217,4 +154,3 @@
 		}		
 
 	}
-

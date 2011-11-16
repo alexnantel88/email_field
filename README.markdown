@@ -1,17 +1,14 @@
-Email Field
-------------------------------------
+# Email Field
 
-Version: 1.0
-Author: Alistair Kearney (alistair@symphony-cms.com)
-Build Date: 3rd Sept 2009
-Requirements: Symphony 2.0
+* Version: 1.1
+* Author: Symphony Team, originally by Alistair Kearney
+* Build Date: 2011-03-22
+* Requirements: Symphony 2.2
 
 Works just like a normal Input field, but forces the contents to be a valid Email address and provides a hash value in the XML
 
-[INSTALLATION]
+## Installation
 
 1. Upload the 'email_field' folder in this archive to your Symphony 'extensions' folder.
-
 2. Enable it by selecting the "Field: Email", choose Enable from the with-selected menu, then click Apply.
-
 3. You can now add the "Email" field to your sections.
