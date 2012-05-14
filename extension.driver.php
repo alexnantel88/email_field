@@ -1,19 +1,6 @@
 <?php
 
 	Class extension_Email_Field extends Extension{
-
-		public function about(){
-			return array(
-				'name' => 'Field: Email',
-				'version' => '1.1',
-				'release-date' => '2011-03-22',
-				'author' => array(
-					'name' => 'Symphony Team',
-					'website' => 'http://symphony-cms.com'
-				)
-			);
-		}
-
 		public function uninstall(){
 			Symphony::Database()->query("DROP TABLE `tbl_fields_email`");
 		}
@@ -28,5 +15,4 @@
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 			");
 		}
-
 	}
