@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension id="email_field" status="experimental" xmlns="http://symphony-cms.com/schemas/extension/1.0">
+<extension id="email_field" status="released" xmlns="http://symphony-cms.com/schemas/extension/1.0">
 	<name>Field: Email</name>
 	<description>Works just like a normal Input field, but forces the contents to be a valid Email address and provides a hash value in the XML.</description>
 	<repo type="github">https://github.com/symphonycms/email_field</repo>
