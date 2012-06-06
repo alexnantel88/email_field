@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension id="email_field" status="released" xmlns="http://symphony-cms.com/schemas/extension/1.0">
+	<name>Field: Email</name>
+	<description>Works just like a normal Input field, but forces the contents to be a valid Email address and provides a hash value in the XML.</description>
+	<repo type="github">https://github.com/symphonycms/email_field</repo>
+	<types>
+		<type>Field</type>
+	</types>
+	<authors>
+		<author>
+			<name github="team" symphony="symphonycms">Symphony Team, originally by Alistair Kearney</name>
+			<website>http://www.symphony-cms.com</website>
+		</author>
+	</authors>
+	<releases>
+		<release version="1.2" date="2012-05-14" min="2.3" max="2.3.x">
+			* Symphony 2.3 compatibility
+		</release>
+		<release version="1.1" date="2011-03-22" min="2.2" max="2.2.x"/>
+	</releases>
+</extension>

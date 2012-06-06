@@ -4,8 +4,8 @@
 
 	Class fieldEmail extends fieldInput {
 
-		public function __construct(&$parent){
-			parent::__construct($parent);
+		public function __construct(){
+			parent::__construct();
 			$this->_name = __('Email');
 			$this->_required = true;
 
