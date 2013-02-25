@@ -1,6 +1,7 @@
 <?php
 
 	Class extension_Email_Field extends Extension{
+
 		public function uninstall(){
 			Symphony::Database()->query("DROP TABLE `tbl_fields_email`");
 		}
