@@ -11,7 +11,7 @@
 
 			$this->set('required', 'no');
 		}
-		
+
 	/*-------------------------------------------------------------------------
 		Setup:
 	-------------------------------------------------------------------------*/
@@ -35,13 +35,13 @@
 
 		private function __applyValidationRule($data) {
 			include(TOOLKIT . '/util.validators.php');
-			$rule = (isset($validators['email']) 
+			$rule = (isset($validators['email'])
 				? $validators['email']
 				: '/^\w(?:\.?[\w%+-]+)*@\w(?:[\w-]*\.)+?[a-z]{2,}$/i');
 
 			return General::validateString($data, $rule);
 		}
-		
+
 
 	/*-------------------------------------------------------------------------
 		Settings:
@@ -53,7 +53,7 @@
 			$div = new XMLElement('div', NULL, array('class' => 'two columns'));
 			$this->appendRequiredCheckbox($div);
 			$this->appendShowColumnCheckbox($div);
-			$wrapper->appendChild($div);
+			//$wrapper->appendChild($div);
 		}
 
 		public function commit(){
@@ -64,7 +64,7 @@
 
 			$fields = array();
 			$fields['field_id'] = $id;
-			
+
 			return FieldManager::saveSettings($id, $fields);
 		}
 
@@ -89,7 +89,7 @@
 			return self::__OK__;
 
 		}
-		
+
 		public function processRawFieldData($data, &$status, &$message=null, $simulate = false, $entry_id = null) {
 			$status = self::__OK__;
 
@@ -125,7 +125,7 @@
 						AND t{$field_id}_{$this->_key}.value = '{$value}'
 					";
 				}
-			} 
+			}
 			else {
 				if (!is_array($data)) $data = array($data);
 
