@@ -49,15 +49,28 @@
 
 		public function displaySettingsPanel(XMLElement &$wrapper, $errors = null) {
 			parent::displaySettingsPanel($wrapper, $errors);
-			$wrapper->removeChildAt(4);
-			$wrapper->removeChildAt(5);
+
+			// Hide Validator field
+			if(count($wrapper->getChildren()) == 7) {
+				$wrapper->removeChildAt(4);
+				$wrapper->removeChildAt(5);
+			} else {
+				$wrapper->removeChildAt(3);
+				$wrapper->removeChildAt(4);
+			}
 		}
 
-		public function commit(){
-			if(!parent::commit()) return false;
+		public function commit() {
+			// Bypass current parent (fieldInput)
+			// use the default implementation from the abstract class
+			if(!Field::commit()) {
+				return false;
+			}
 
 			$id = $this->get('id');
-			if($id === false) return false;
+			if($id === false) {
+				return false;
+			}
 
 			$fields = array();
 			$fields['field_id'] = $id;
