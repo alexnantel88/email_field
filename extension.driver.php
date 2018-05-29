@@ -3,17 +3,31 @@
 	Class extension_Email_Field extends Extension{
 
 		public function uninstall(){
-			Symphony::Database()->query("DROP TABLE `tbl_fields_email`");
+			return Symphony::Database()
+				->drop('tbl_fields_email')
+				->ifExists()
+				->execute()
+				->success();
 		}
 
 		public function install(){
-			return Symphony::Database()->query("
-				CREATE TABLE `tbl_fields_email` (
-					`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-					`field_id` INT(11) UNSIGNED NOT NULL,
-					PRIMARY KEY  (`id`),
-					KEY `field_id` (`field_id`)
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-			");
+			return Symphony::Database()
+				->create('tbl_fields_email')
+				->ifNotExists()
+				->charset('utf8')
+				->collate('utf8_unicode_ci')
+				->fields([
+					'id' => [
+						'type' => 'int(11)',
+						'auto' => true,
+					],
+					'field_id' => 'int(11)',
+				])
+				->keys([
+					'id' => 'primary',
+					'field_id' => 'key',
+				])
+				->execute()
+				->success();
 		}
 	}
